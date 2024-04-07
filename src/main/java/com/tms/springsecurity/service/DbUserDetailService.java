@@ -42,15 +42,17 @@ public class DbUserDetailService implements UserDetailsService {
         person.setLogin(username);
         person.setPassword(passwordEncoder.encode(password));
         person.setPerm("ROLE_" + role.name());
-        repository.save(person);
-        if (!role.name().equals("EMPLOYER")){
-        Applicant applicant = new Applicant();
-        applicant.setUser(person);
-        applicantRepository.save(applicant);}
-        else {
+        if ((!role.name().equals("EMPLOYER"))&&(!role.name().equals("ADMIN"))) {
+            Applicant applicant = new Applicant();
+            applicant.setUser(person);
+            applicantRepository.save(applicant);
+        } if((!role.name().equals("APPLICANT"))&&(!role.name().equals("ADMIN"))) {
             Employer employer = new Employer();
             employer.setUser(person);
             employerRepository.save(employer);
+        }
+        if (role.name().equals("ADMIN")){
+            repository.save(person);
         }
     }
 }

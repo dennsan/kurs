@@ -14,9 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig {
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
     public WebSecurityConfig(AuthenticationSuccessHandler authenticationSuccessHandler) {
@@ -30,10 +30,10 @@ public class WebSecurityConfig {
 
         http.authorizeHttpRequests(cust -> {
             cust
-                    .requestMatchers("/", "/login", "/logout", "/registration").permitAll()
-                    .requestMatchers("/applicant", "/applicant/update", "/applicant/logout").hasAnyRole("ADMIN", "APPLICANT")
-                    .requestMatchers("/employer", "/employer/**", "/employer/delete").hasRole("EMPLOYER");
-
+                    .requestMatchers("/", "/login", "/logout", "/registration", "admin/add").permitAll()
+                    .requestMatchers("/applicant", "/applicant/update", "/applicant/logout", "/applicant/delaccount").hasAnyRole("ADMIN", "APPLICANT")
+                    .requestMatchers("/employer", "/employer/**", "/employer/delete", "/employer/delaccount").hasRole("EMPLOYER")
+                    .requestMatchers("/admin", "admin/applicants", "/admin/delete").hasRole("ADMIN");
         });
 
         http.formLogin(cust -> {

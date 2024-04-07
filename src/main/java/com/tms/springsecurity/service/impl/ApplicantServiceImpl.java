@@ -29,7 +29,7 @@ public class ApplicantServiceImpl implements ApplicantService {
 
     @Override
     public ApplicantDto findById(Integer id) {
-        var applicant = repository.findById(id).orElseThrow(() -> new RuntimeException());
+        var applicant = repository.findById(id).orElseThrow(() -> new RuntimeException("Not found applicant"));
         return mapper.toDto(applicant);
     }
 
@@ -41,25 +41,32 @@ public class ApplicantServiceImpl implements ApplicantService {
     @Override
     @Transactional
     public void update(ApplicantDto dto) {
+        Applicant applicant = getCurrentAppl();
+        applicant.setName(dto.getName());
+        applicant.setSurname(dto.getSurname());
+        applicant.setVca(dto.getVca());
+        if (!applicant.getLanguages().contains(dto.getLanguage())) {
+            applicant.addLang(dto.getLanguage());
+        }
+        if (!applicant.getSpecialities().contains(dto.getSpeciality())) {
+            applicant.addSpec(dto.getSpeciality());
+        }
+    }
+
+    @Override
+    public Applicant getCurrentAppl() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         User user = (User) principal;
         Applicant applicant1 = user.getApplicant();
         Integer id = applicant1.getId();
         Optional<Applicant> applicantId = repository.findById(id);
-        Applicant applicant = applicantId.get();
-        applicant.setName(dto.getName());
-        applicant.setSurname(dto.getSurname());
-        applicant.setVca(dto.getVca());
-        if (applicant.getLanguages().contains(dto.getLanguage())){
+        return applicantId.get();
+    }
 
-        }else {
-            applicant.addLang(dto.getLanguage());
-        }
-        if (applicant.getSpecialities().contains(dto.getSpeciality())){
-
-        }else {
-            applicant.addSpec(dto.getSpeciality());
-        }
+    @Override
+    public void delete() {
+        Applicant applicant = getCurrentAppl();
+        repository.delete(applicant);
     }
 }

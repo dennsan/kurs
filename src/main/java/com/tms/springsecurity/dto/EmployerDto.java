@@ -20,4 +20,8 @@ public class EmployerDto {
     private String contactName;
     private List<Applicant> applicants;
     private User user;
+
+    public EmployerDto(int i, String employer, String number, String s, String city, String contact) {
+
+    }
 }

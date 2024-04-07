@@ -27,11 +27,8 @@ public class ApplicantController {
     @GetMapping
     public ModelAndView applicant() {
         ModelAndView modelAndView = new ModelAndView("applicant");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User principal = (User) authentication.getPrincipal();
-        Integer id = principal.getId();
-        ApplicantDto byId = service.findById(id);
-        modelAndView.addObject("info_applicant", byId);
+        Applicant applicant = service.getCurrentAppl();
+        modelAndView.addObject("info_applicant", applicant);
         return modelAndView;
     }
 
@@ -69,6 +66,10 @@ public class ApplicantController {
         modelAndView.addObject("info_applicant", applicant);
         service.update(dto);
         return modelAndView;
-
+    }
+    @GetMapping("/delaccount")
+    public String delete(){
+        service.delete();
+        return "redirect:/";
     }
 }

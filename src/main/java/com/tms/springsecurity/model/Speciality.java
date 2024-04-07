@@ -20,8 +20,8 @@ public class Speciality {
     private Integer id;
     private String name;
 
-    @ManyToMany(mappedBy = "specialities", fetch = FetchType.EAGER)
-    private List<Applicant> applicants = new ArrayList<>();
+    @ManyToMany(mappedBy = "specialities", fetch = FetchType.LAZY)
+    @ToString.Exclude private List<Applicant> applicants = new ArrayList<>();
 
 
 }

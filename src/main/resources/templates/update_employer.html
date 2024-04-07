@@ -8,7 +8,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<nav th:replace="/fragments/header :: hdr_empl"></nav>
+<nav th:replace="~{/fragments/header :: hdr_empl}"></nav>
+<form th:action="@{/employer/update}" method="post" >
+    <input type="text" name="name" th:value="${employer.getName()}">
+    <input type="text" name="BTV" th:value="${employer.getBTV()}">
+    <input type="text" name="city" th:value="${employer.getCity()}">
+    <input type="text" name="phone" th:value="${employer.getPhone()}">
+    <input type="text" name="contactName" th:value="${employer.getContactName()}">
+    <input type="submit" value="Save">
+</form>
 
 </body>
 </html>

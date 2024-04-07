@@ -13,7 +13,6 @@ public class LanguageServiceImpl implements LanguageService {
     private final LanguageRepository repository;
     @Override
     public List<Language> findAll() {
-        List<Language> languages = repository.findAll();
-        return languages;
+        return repository.findAll();
     }
 }

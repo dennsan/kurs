@@ -3,6 +3,7 @@ package com.tms.springsecurity.web;
 
 import com.tms.springsecurity.dto.EmployerDto;
 import com.tms.springsecurity.model.Applicant;
+import com.tms.springsecurity.model.Employer;
 import com.tms.springsecurity.service.ApplicantService;
 import com.tms.springsecurity.service.EmployerService;
 import lombok.RequiredArgsConstructor;
@@ -57,10 +58,24 @@ public class EmployerController {
         modelAndView.addObject("emp_applicant", applicant);
         return modelAndView;
     }
+    @GetMapping("/update")
+    public ModelAndView update(){
+        ModelAndView modelAndView = new ModelAndView("update_employer");
+        Employer employer = service.getCurrentEmpl();
+        modelAndView.addObject("employer", employer);
+        return modelAndView;
+    }
     @PostMapping("/update")
     public ModelAndView update(EmployerDto dto){
-        ModelAndView modelAndView = new ModelAndView("employer");
+        ModelAndView modelAndView = new ModelAndView("update_employer");
         service.update(dto);
+        Employer employer = service.getCurrentEmpl();
+        modelAndView.addObject("employer", employer);
         return modelAndView;
+    }
+    @GetMapping("/delaccount")
+    public String delAccount(){
+        service.delete();
+        return "redirect:/";
     }
 }

@@ -12,4 +12,6 @@ public interface ApplicantService {
     ApplicantDto save(ApplicantDto applicantDto);
     List<Applicant> getAll();
     void update(ApplicantDto dto);
+    Applicant getCurrentAppl();
+    void delete();
 }

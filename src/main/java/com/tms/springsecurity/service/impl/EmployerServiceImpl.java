@@ -85,14 +85,19 @@ public class EmployerServiceImpl implements EmployerService {
             }
         }
     }
-
+    @Override
     public Employer getCurrentEmpl(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         Employer employer = user.getEmployer();
         Integer id = employer.getId();
         Optional<Employer> employerOptional = repository.findById(id);
-        Employer curEmployer = employerOptional.get();
-        return curEmployer;
+        return employerOptional.get();
+    }
+
+    @Override
+    public void delete() {
+        Employer employer = getCurrentEmpl();
+        repository.delete(employer);
     }
 }

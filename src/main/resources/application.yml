@@ -10,7 +10,7 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-#logging:
-#  level:
-#    web: trace
-#    sql: debug
+logging:
+  level:
+    web: trace
+    sql: error

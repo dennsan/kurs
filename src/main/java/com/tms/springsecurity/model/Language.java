@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ public class Language {
     private String name;
 
 
-   @ManyToMany(mappedBy = "languages",fetch = FetchType.EAGER)
-
+   @ManyToMany(mappedBy = "languages",fetch = FetchType.LAZY)
    @ToString.Exclude private List<Applicant> applicants = new ArrayList<>();
 }
